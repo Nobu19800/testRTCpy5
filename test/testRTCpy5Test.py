@@ -9,17 +9,20 @@
 
 
 """
+from __future__ import print_function
 import sys
 import time
 sys.path.append(".")
 
 # Import RTM module
-import RTC
 import OpenRTM_aist
+import RTC
 
 
 # Import Service implementation class
 # <rtc-template block="service_impl">
+
+import testRTCpy5
 
 # </rtc-template>
 
@@ -57,6 +60,14 @@ class testRTCpy5Test(OpenRTM_aist.DataFlowComponentBase):
 	def __init__(self, manager):
 		OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
+		self._d_out = OpenRTM_aist.instantiateDataType(RTC.TimedFloat)
+		"""
+		"""
+		self._outIn = OpenRTM_aist.InPort("out", self._d_out)
+		self._d_in = OpenRTM_aist.instantiateDataType(RTC.TimedLong)
+		"""
+		"""
+		self._inOut = OpenRTM_aist.OutPort("in", self._d_in)
 
 
 		
@@ -81,8 +92,10 @@ class testRTCpy5Test(OpenRTM_aist.DataFlowComponentBase):
 		# Bind variables and configuration variable
 		
 		# Set InPort buffers
+		self.addInPort("out",self._outIn)
 		
 		# Set OutPort buffers
+		self.addOutPort("in",self._inOut)
 		
 		# Set service provider to Ports
 		
@@ -245,8 +258,15 @@ class testRTCpy5Test(OpenRTM_aist.DataFlowComponentBase):
 	#
 	#	return RTC.RTC_OK
 	
+	def runTest(self):
+		return True
 
-
+def RunTest():
+	manager = OpenRTM_aist.Manager.instance()
+	comp = manager.getComponent("testRTCpy5Test0")
+	if comp is None:
+		print('Component get failed.', file=sys.stderr)
+	return comp.runTest()
 
 def testRTCpy5TestInit(manager):
     profile = OpenRTM_aist.Properties(defaults_str=testrtcpy5test_spec)
@@ -256,6 +276,7 @@ def testRTCpy5TestInit(manager):
 
 def MyModuleInit(manager):
     testRTCpy5TestInit(manager)
+    testRTCpy5.testRTCpy5Init(manager)
 
     # Create a component
     comp = manager.createComponent("testRTCpy5Test")
@@ -264,7 +285,15 @@ def main():
 	mgr = OpenRTM_aist.Manager.init(sys.argv)
 	mgr.setModuleInitProc(MyModuleInit)
 	mgr.activateManager()
-	mgr.runManager()
+	mgr.runManager(True)
+
+	ret = RunTest()
+	mgr.shutdown()
+
+	if ret:
+		sys.exit(0)
+	else:
+		sys.exit(1)
 
 if __name__ == "__main__":
 	main()

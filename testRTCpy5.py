@@ -57,6 +57,14 @@ class testRTCpy5(OpenRTM_aist.DataFlowComponentBase):
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
+        self._d_in = OpenRTM_aist.instantiateDataType(RTC.TimedLong)
+        """
+        """
+        self._inIn = OpenRTM_aist.InPort("in", self._d_in)
+        self._d_out = OpenRTM_aist.instantiateDataType(RTC.TimedFloat)
+        """
+        """
+        self._outOut = OpenRTM_aist.OutPort("out", self._d_out)
 
 
 		
@@ -80,8 +88,10 @@ class testRTCpy5(OpenRTM_aist.DataFlowComponentBase):
         # Bind variables and configuration variable
 		
         # Set InPort buffers
+        self.addInPort("in",self._inIn)
 		
         # Set OutPort buffers
+        self.addOutPort("out",self._outOut)
 		
         # Set service provider to Ports
 		

@@ -56,6 +56,24 @@ Lang Type:
 ======================================================================
 # <rtc-template block="inport">
 
+	Name:        in
+	PortNumber:  0
+	Description: 
+	PortType: 
+	DataType:    RTC::TimedLong
+	MaxOut: 
+	[Data Elements]
+		Name:
+		Type:            
+		Number:          
+		Semantics:       
+		Unit:            
+		Frequency:       
+		Operation Cycle: 
+		RangeLow:
+		RangeHigh:
+		DefaultValue:
+
 
 # </rtc-template>
 
@@ -63,6 +81,24 @@ Lang Type:
     OutPorts definition
 ======================================================================
 # <rtc-template block="outport">
+
+	Name:        out
+	PortNumber:  0
+	Description: 
+	PortType: 
+	DataType:    RTC::TimedFloat
+	MaxOut: 
+	[Data Elements]
+		Name:
+		Type:            
+		Number:          
+		Semantics:       
+		Unit:            
+		Frequency:       
+		Operation Cycle: 
+		RangeLow:
+		RangeHigh:
+		DefaultValue:
 
 
 # </rtc-template>
